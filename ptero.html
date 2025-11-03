@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+  <title>Sendy STR</title>
+  <style>
+    body {
+      background: url('https://files.catbox.moe/8yd0ge.jpg');
+      font-family: "Audiowide", sans-serif;
+      color: #00FFFF;
+      padding: 20px;
+    }
+  
+  body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,10,30,0.7);
+      backdrop-filter: blur(6px);
+      z-index: -1;
+  }
+
+    .judul {
+      text-align: center;
+      font-family: "Audiowide", sans-serif;
+      font-size: 2em;
+      font-weight: bold;
+      color: #00FFFF;
+      margin-top: 40px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #00FFFF;
+      letter-spacing: 1px;
+    }
+
+    .judul span {
+      opacity: 0;
+      display: inline-block;
+      animation: fadeIn 0.05s forwards;
+    }
+  
+  .judul p {
+      text-align: center;
+      font-size: 1em;
+      font-weight: bold;
+      color: #00FFFF;
+      margin-top: 40px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #00FFFF;
+      letter-spacing: 1px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    form {
+      max-width: 400px;
+      margin: 30px auto;
+      background: #000000;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00FFFF;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-family: "Audiowide", sans-serif;
+      margin-bottom: 10px;
+      background-color: #333;
+      color: #fff;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #00FFFF;
+      border: none;
+      border-radius: 8px;
+      font-family: "Audiowide", sans-serif;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #00c4aa;
+    }
+  </style>
+</head>
+<body>
+  <div class="judul" id="judul">
+    <p>SendyHost PANEL</p>
+  </div>
+  
+  <form id="topupForm">
+      <img src="ptero.jpg" class="mx-auto w-20 h-20 rounded-full border-2 border-purple-600 shadow-lg mb-2" alt="avatar"/>
+    <label for="game">Pterodactyl Panel </label>
+    <select id="game" required>
+      <option value="">Klik Daftar</option>
+      <option value="Pterodactyl">Pterodactyl</option>
+    </select>
+    
+    <label for="jumlah">Pilih Produk</label>
+    <select id="jumlah" required>
+     <option value="">Pilih Produk</option>
+    </select>
+
+
+    <label for="metode">Metode Pembayaran</label>
+    <select id="metode" required>
+      <option value="">Pilih Payment</option>
+      <option value="QRIS">QRIS</option>
+      <option value="DANA">DANA</option>
+    </select>
+
+    <button type="submit">BELI SEKARANG</button>
+     <div class="text-sm text-white-300 font-weight: bold">⚠️ Pastikan Kamu Menpunyai Apk Telegram,Untuk Berkomunikasi Dalam Pembelian🗿.</div>
+  </form>
+  
+  <script>
+    // Efek animasi huruf satu per satu
+    const judulText = "SendyHost";
+    const judulContainer = document.getElementById("judul");
+
+    [...judulText].forEach((char, index) => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.style.animationDelay = `${index * 0.08}s`;
+      judulContainer.appendChild(span);
+    });
+
+    // Dynamic dropdown jumlah top up per game
+    const jumlahTopUpOptions = {
+      "Pterodactyl": ["Panel 1gb", "Panel 4gb", "Panel 8gb", "Panel Unli", "Reseller Panel", "Admin Panel", "Partner Panel", "Owner Panel", "TK Panel"],
+    };
+
+    const gameSelect = document.getElementById("game");
+    const jumlahSelect = document.getElementById("jumlah");
+
+    gameSelect.addEventListener("change", function () {
+      const selectedGame = this.value;
+      jumlahSelect.innerHTML = '<option value="">-- Daftar Panel --</option>';
+      if (jumlahTopUpOptions[selectedGame]) {
+        jumlahTopUpOptions[selectedGame].forEach(item => {
+          const option = document.createElement("option");
+          option.value = item;
+          option.textContent = item;
+          jumlahSelect.appendChild(option);
+        });
+      }
+    });
+
+    document.getElementById("topupForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const game = gameSelect.value;
+      const jumlah = jumlahSelect.value;
+      const metode = document.getElementById("metode").value;
+
+      const pesan = `Halo%2C+saya+ingin+buy+${encodeURIComponent(game)}%0A` +
+      `Produk%3A+${encodeURIComponent(jumlah)}%0A` +
+        `Metode+Pembayaran%3A+${encodeURIComponent(metode)}`;
+
+      const url = `https://t.me/sendyhosting?text=${pesan}`;
+      window.open(url, '_blank');
+    });
+  </script>
+
+</body>
+</html>
